@@ -13,19 +13,20 @@ export class EventService {
         if(this.data.length != 0){
             return of(this.data);
         }else{
-            this.dataHandlerService.getAppointments("f7W18EB").then((events:Array<any>)=>{
-                for(var i = 0 ; i< events.length ; i++){
-                    this.data.push({
+            // this.dataHandlerService.getAppointments("f7W18EB").then((events:Array<any>)=>{
+            //     for(var i = 0 ; i< events.length ; i++){
+            //         this.data.push({
 
-                        title: events[i].title,
-                        start : events[i].st,
-                        end : events[i].et
-                    });
-                    if(i == events.length-1 ){
-                        return of(this.data);
-                    }
-                }
-            })
+            //             title: events[i].title,
+            //             start : events[i].st,
+            //             end : events[i].et
+            //         });
+            //         if(i == events.length-1 ){
+            //             return of(this.data);
+            //         }
+            //     }
+            // })
+            return of([])
         }
     }
 };

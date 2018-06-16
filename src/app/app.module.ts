@@ -6,14 +6,19 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 import { EventCalenderComponent } from './components/event-calender/event-calender.component';
 import { EventService } from './services/event.service';
 import { DataHandlerService } from './services/data-handler.service';
+import { AppRoutingModule, routingComponents } from './app-routing/app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    EventCalenderComponent
+    EventCalenderComponent,
+    routingComponents
   ],
   imports: [
     BrowserModule,
-    FullCalendarModule
+    FullCalendarModule,
+    AppRoutingModule,
+    HttpClientModule
 
   ],
   providers: [EventService,DataHandlerService],
