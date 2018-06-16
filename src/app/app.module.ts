@@ -11,8 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    EventCalenderComponent,
-    routingComponents
+    EventCalenderComponent,routingComponents
   ],
   imports: [
     BrowserModule,
