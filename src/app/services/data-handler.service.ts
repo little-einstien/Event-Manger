@@ -14,7 +14,7 @@ export class DataHandlerService {
   constructor(private http: HttpClient) { }
 
   
-  saveAppointment(appointment) {
+  saveAppointment(appointment)  {
     return new Promise((resolve, reject) => {
       const httpOptions = {
         headers: new HttpHeaders({

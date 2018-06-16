@@ -14,7 +14,8 @@ export class EventCalenderComponent implements OnInit {
    @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
   constructor(protected eventService: EventService) { }
   ngOnInit() {
-    this.eventService.getEvents().subscribe(data => {
+    this.eventService.getEvents().then(data => {
+      console.log("***************calendar service****************",data);
       this.calendarOptions = {
         editable: true,
         eventLimit: false,
