@@ -109,7 +109,7 @@ export class EventCalender2Component implements OnInit {
   activeDayIsOpen: boolean = true;
 
   constructor(private modal: NgbModal,private dataHandlerServie  : DataHandlerService) {
-    this.dataHandlerServie.getAppointments('').then((appointments:Array<any>) => {
+    this.dataHandlerServie.getAppointments('131d3w2d').then((appointments:Array<any>) => {
       this.events = [
         ];
       
@@ -117,7 +117,7 @@ export class EventCalender2Component implements OnInit {
         this.events.push({
           start: new Date(appointments[i].st),
           end: new Date(appointments[i].et),
-          title: appointments[i].title,
+          title: appointments[i].fields.join(' | '),
           color: colors.yellow,
           actions: this.actions,
           resizable: {
@@ -132,6 +132,19 @@ export class EventCalender2Component implements OnInit {
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    //alert();
+    this.events_ = [{
+      title: 'New event',
+      start: startOfDay(new Date()),
+      end: endOfDay(new Date()),
+      color: colors.red,
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      }
+    }];
+    this.modal.open(this.modalContent, { size: 'lg' });
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -155,10 +168,11 @@ export class EventCalender2Component implements OnInit {
     this.handleEvent('Dropped or resized', event);
     this.refresh.next();
   }
-
+ public events_ = [];
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
+
   }
 
   addEvent(): void {

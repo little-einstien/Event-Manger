@@ -37,7 +37,7 @@ export class DataHandlerService {
           'Content-Type': 'application/json'
         })
       };
-      let url = `${this.apiRoot}/api/appointments`;
+      let url = `${this.apiRoot}/api/appointments/${id}`;
       this.http.get(url, httpOptions).subscribe((res:any) => {
         if (res.status == DataHandlerService.SUCCESS) {
           resolve(res.data);
