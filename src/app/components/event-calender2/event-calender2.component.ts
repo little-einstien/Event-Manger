@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-
+import * as moment from 'moment';
 
 import {
   startOfDay,
@@ -19,6 +19,7 @@ import {
 } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataHandlerService } from '../../services/data-handler.service';
+import * as _ from 'lodash';
 
 const colors: any = {
   red: {
@@ -40,8 +41,24 @@ const colors: any = {
   styleUrls: ['./event-calender2.component.css']
 })
 export class EventCalender2Component implements OnInit {
-
+  showEditorPane = false;
+  morning_slots = [];
+  evening_slots = [];
+  morning_slots_input = [];
+  evening_slots_input = [];
   ngOnInit(): void {
+    const day_start = moment().startOf('day').hours(9); // 7 am
+    const day_end = moment().startOf('day').hours(13) // 10 pm
+    while (day_start <= day_end) {
+      this.morning_slots.push(moment(day_start).format('HH:mm'));
+      day_start.add(30, 'minutes');
+    }
+    const day_start1 = moment().startOf('day').hours(15); // 7 am
+    const day_end1 = moment().startOf('day').hours(20) // 10 pm
+    while (day_start1 <= day_end1) {
+      this.evening_slots.push(moment(day_start1).format('HH:mm'));
+      day_start1.add(30, 'minutes');
+    }
   }
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
@@ -108,12 +125,12 @@ export class EventCalender2Component implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal,private dataHandlerServie  : DataHandlerService) {
-    this.dataHandlerServie.getAppointments('131d3w2d').then((appointments:Array<any>) => {
+  constructor(private modal: NgbModal, private dataHandlerServie: DataHandlerService) {
+    this.dataHandlerServie.getAppointments('131d3w2d').then((appointments: Array<any>) => {
       this.events = [
-        ];
-      
-      for(let i = 0 ; i< appointments.length; i++){
+      ];
+
+      for (let i = 0; i < appointments.length; i++) {
         this.events.push({
           start: new Date(appointments[i].st),
           end: new Date(appointments[i].et),
@@ -127,33 +144,22 @@ export class EventCalender2Component implements OnInit {
           draggable: true
         });
       }
-            
+
     });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    //alert();
-    this.events_ = [{
-      title: 'New event',
-      start: startOfDay(new Date()),
-      end: endOfDay(new Date()),
-      color: colors.red,
-      draggable: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true
-      }
-    }];
-    this.modal.open(this.modalContent, { size: 'lg' });
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
         events.length === 0
       ) {
         this.activeDayIsOpen = false;
+        this.showEditorPane = !this.showEditorPane
+        //alert(this.viewDate);
       } else {
-        this.activeDayIsOpen = true;
         this.viewDate = date;
+        this.activeDayIsOpen = true;
       }
     }
   }
@@ -168,7 +174,7 @@ export class EventCalender2Component implements OnInit {
     this.handleEvent('Dropped or resized', event);
     this.refresh.next();
   }
- public events_ = [];
+  public events_ = [];
   handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
@@ -188,5 +194,31 @@ export class EventCalender2Component implements OnInit {
       }
     });
     this.refresh.next();
+  }
+  selectedMorningSlots = [];
+  selectedEveningSlots = [];
+  saveSlots(){
+    this.dataHandlerServie.saveSlots({date : this.viewDate,m_slts:this.selectedMorningSlots,e_slts:this.selectedEveningSlots});
+    console.log(this.selectedMorningSlots);
+    console.log(this.selectedEveningSlots);
+  }
+  addMorningSlots(date,i){
+    if(this.morning_slots_input[i]){
+      this.selectedMorningSlots.push(date);
+      //this.selectedMorningSlots.push(date);
+    }else{
+      _.remove(this.selectedMorningSlots, function(n) {
+        return this.selectedMorningSlots[n] === date;
+      });
+    }
+  }
+  addEveningSlots(date,i){
+    if(this.evening_slots_input[i]){
+      this.selectedEveningSlots.push(date);
+    }else{
+      _.remove(this.selectedEveningSlots, function(n) {
+        return this.selectedEveningSlots[n] == date;
+      });
+    }
   }
 }

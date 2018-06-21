@@ -7,3 +7,31 @@ h3 {
     padding: 15px;
   }
   
+.round-btn{
+  margin-left: 10px;
+  background: #00AAFF;
+  border-radius: 50px;
+}
+#cl-header{
+  padding: 15px;
+}
+#cl-body{
+  padding: 15px;
+}
+#cl-container{
+
+}
+#slot-list{
+  overflow-y: scroll;
+  max-height: 300px;
+  margin-top: 0px;
+}
+#editor-pane{
+  padding:15px;  
+}
+#editor-pane > span{
+  /* border-radius:50px; */
+  background: #00AAFF;
+  font-weight: bold;
+  padding: 5px;
+}

@@ -1,114 +1,83 @@
-<ng-template #modalContent let-close="close">
-  <div class="modal-header">
-    <h5 class="modal-title">Event action occurred</h5>
-    <button type="button" class="close" (click)="close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <!-- <div>
-        Action:
-        <pre>{{ modalData?.action }}</pre>
-      </div>
-      <div>
-        Event:
-        <pre>{{ modalData?.event | json }}</pre>
-      </div> -->
-
-
-
-    <!-- <th>Primary color</th> -->
-    <!-- <th>Secondary color</th> -->
-
-
-
-    <div *ngFor="let event of events_; let index = index">
-      <div class="row">
-        <span class="col s1">Title</span>
-        <div class="col s11">
-          <input type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()">
-        </div>
-      </div>
-      <!-- <td>
-              <input
-                type="color"
-                [(ngModel)]="event.color.primary"
-                (change)="refresh.next()">
-            </td>
-            <td>
-              <input
-                type="color"
-                [(ngModel)]="event.color.secondary"
-                (change)="refresh.next()">
-            </td> -->
-      <div class="row">
-        <span class="col s1">Starts at</span>
-        <div class="col s11">
-          <mwl-demo-utils-date-time-picker [(ngModel)]="event.start" (ngModelChange)="refresh.next()" placeholder="Not set">
-          </mwl-demo-utils-date-time-picker>
-        </div>
-      </div>
-      <div class="row">
-        <span class="col s1">Ends at</span>
-        <div class="col s11">
-          <mwl-demo-utils-date-time-picker [(ngModel)]="event.end" (ngModelChange)="refresh.next()" placeholder="Not set">
-          </mwl-demo-utils-date-time-picker>
-        </div>
-      </div>
-      <!-- <td>
-              <button
-                class="btn btn-danger"
-                (click)="events.splice(index, 1); refresh.next()">
-                Delete
-              </button>
-            </td> -->
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">OK</button>
-  </div>
-</ng-template>
-
-<div class="row text-center main">
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
-        Previous
-      </div>
-      <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+<div id="cl-container">
+  <div id="cl-header" class="row">
+    <div class="col s3">
+        
+      <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+          <i class="material-icons">keyboard_arrow_left </i>
+      </a>
+      <a class="waves-effect waves-teal btn-flat" mwlCalendarToday [(viewDate)]="viewDate">
         Today
+      </a>
+      <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+          <i class=" material-icons">keyboard_arrow_right </i>
+      </a>
+    </div>
+    <div class="col s6 center-align">
+        <div class="waves-effect waves-teal btn-flat">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</div>
+        <a class="waves-effect waves-light btn-small" >
+        Book An Appointment
+        </a>
+        <a class="waves-effect waves-light btn-small">
+          See Schedule
+        </a>
       </div>
-      <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
-        Next
+    <div class="col s3 right-align">
+        <a class="waves-effect waves-light btn-small" (click)="view = 'month'" [class.active]="view === 'month'">
+          Month
+        </a>
+        <a class="waves-effect waves-light btn-small" (click)="view = 'week'" [class.active]="view === 'week'">
+          Week
+        </a>
+        <a class="waves-effect waves-light btn-small" (click)="view = 'day'" [class.active]="view === 'day'">
+          Day
+        </a>
+      </div>
+    
+    
+  </div>
+  <br>
+  <div class="row">
+    <div id="cl-body" [ngClass]="{'col s8' : showEditorPane}" [ngSwitch]="view">
+      <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+        (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-month-view>
+      <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-week-view>
+      <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+      </mwl-calendar-day-view>
+    </div>
+    <div id="editor-pane" *ngIf="showEditorPane" class="col s4">
+      <span class=" center white-text">Mark availibility for {{viewDate.getDate()}} {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</span>
+      <ul class="collection" id="slot-list">
+        <li class="collection-item ">
+          <span class="col s12">Morning Slots</span>
+          <p *ngFor="let slot of morning_slots index as i;" [attr.data-index]="i" class="col s3">
+            <label>
+              <input  type="checkbox" [(ngModel)] = "morning_slots_input[i]" (ngModelChange)="addMorningSlots(slot,i)"/>
+              <span>{{slot}}</span>
+            </label>
+          </p>
+
+        </li>
+      </ul>
+      <ul class="collection" id="slot-list">
+        <li class="collection-item ">
+          <span class="col s12">Evening Slots</span>
+          <p *ngFor="let slot of evening_slots index as i;" [attr.data-index]="i" class="col s3">
+            <label>
+              <input  type="checkbox" [(ngModel)] = "evening_slots_input[i]" (ngModelChange)="addEveningSlots(slot,i)"/>
+              <span>{{slot}}</span>
+            </label>
+          </p>
+
+        </li>
+      </ul>
+      <div >
+        <a class="waves-effect waves-light round-btn btn" (click)="saveSlots()">Save Slots</a>
+        <!-- <a class="waves-effect waves-light btn">button</a> -->
       </div>
     </div>
   </div>
-  <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-  </div>
-  <div class="col-md-4">
-    <div class="btn-group">
-      <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
-        Month
-      </div>
-      <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">
-        Week
-      </div>
-      <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">
-        Day
-      </div>
-    </div>
-  </div>
-</div>
-<br>
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)">
-  </mwl-calendar-day-view>
 </div>
