@@ -1,5 +1,6 @@
-<div id="cl-container">
-  <div id="cl-header" class="row">
+<div class="row">
+<div id="cl-container" [ngClass]="{'col s8' : showEditorPane}">
+  <div id="cl-header" class="row p-b-0 m-b-0">
     <div class="col s3">
         
       <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
@@ -12,16 +13,13 @@
           <i class=" material-icons">keyboard_arrow_right </i>
       </a>
     </div>
-    <div class="col s6 center-align">
-        <div class="waves-effect waves-teal btn-flat">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</div>
+    <div class="col s9 right-align">
         <a class="waves-effect waves-light btn-small" >
-        Book An Appointment
+        Block the calender
         </a>
         <a class="waves-effect waves-light btn-small">
-          See Schedule
+          View Schedule
         </a>
-      </div>
-    <div class="col s3 right-align">
         <a class="waves-effect waves-light btn-small" (click)="view = 'month'" [class.active]="view === 'month'">
           Month
         </a>
@@ -31,13 +29,14 @@
         <a class="waves-effect waves-light btn-small" (click)="view = 'day'" [class.active]="view === 'day'">
           Day
         </a>
-      </div>
-    
+	</div>
+    <div class="col s12 left-align">
+		<h5>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h5>
+	</div>
     
   </div>
-  <br>
   <div class="row">
-    <div id="cl-body" [ngClass]="{'col s8' : showEditorPane}" [ngSwitch]="view">
+    <div id="cl-body" class="p-t-0" [ngSwitch]="view">
       <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
         (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
       </mwl-calendar-month-view>
@@ -48,36 +47,37 @@
         (eventTimesChanged)="eventTimesChanged($event)">
       </mwl-calendar-day-view>
     </div>
-    <div id="editor-pane" *ngIf="showEditorPane" class="col s4">
-      <span class=" center white-text">Mark availibility for {{viewDate.getDate()}} {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</span>
-      <ul class="collection" id="slot-list">
-        <li class="collection-item ">
-          <span class="col s12">Morning Slots</span>
-          <p *ngFor="let slot of morning_slots index as i;" [attr.data-index]="i" class="col s3">
-            <label>
-              <input  type="checkbox" [(ngModel)] = "morning_slots_input[i]" (ngModelChange)="addMorningSlots(slot,i)"/>
-              <span>{{slot}}</span>
-            </label>
-          </p>
-
-        </li>
-      </ul>
-      <ul class="collection" id="slot-list">
-        <li class="collection-item ">
-          <span class="col s12">Evening Slots</span>
-          <p *ngFor="let slot of evening_slots index as i;" [attr.data-index]="i" class="col s3">
-            <label>
-              <input  type="checkbox" [(ngModel)] = "evening_slots_input[i]" (ngModelChange)="addEveningSlots(slot,i)"/>
-              <span>{{slot}}</span>
-            </label>
-          </p>
-
-        </li>
-      </ul>
-      <div >
-        <a class="waves-effect waves-light round-btn btn" (click)="saveSlots()">Save Slots</a>
-        <!-- <a class="waves-effect waves-light btn">button</a> -->
-      </div>
-    </div>
   </div>
+</div>
+<div id="editor-pane" *ngIf="showEditorPane" class="col s4">
+	<span class=" center white-text">Mark availibility for {{dateClicked.getDate()}} {{ dateClicked | calendarDate:(view + 'ViewTitle'):'en' }}</span>
+	<ul class="collection" id="slot-list">
+	<li class="collection-item ">
+	  <span class="col s12">Morning Slots</span>
+	  <p *ngFor="let slot of morning_slots index as i;" [attr.data-index]="i" class="col s3">
+		<label>
+		  <input  type="checkbox" [(ngModel)] = "morning_slots_input[i]" (ngModelChange)="addMorningSlots(slot,i)"/>
+		  <span>{{slot}}</span>
+		</label>
+	  </p>
+
+	</li>
+	</ul>
+	<ul class="collection" id="slot-list">
+	<li class="collection-item ">
+	  <span class="col s12">Evening Slots</span>
+	  <p *ngFor="let slot of evening_slots index as i;" [attr.data-index]="i" class="col s3">
+		<label>
+		  <input  type="checkbox" [(ngModel)] = "evening_slots_input[i]" (ngModelChange)="addEveningSlots(slot,i)"/>
+		  <span>{{slot}}</span>
+		</label>
+	  </p>
+
+	</li>
+	</ul>
+	<div >
+		<a class="waves-effect waves-light round-btn btn" (click)="saveSlots()">Save Slots</a>
+		<!-- <a class="waves-effect waves-light btn">button</a> -->
+	</div>
+</div>
 </div>

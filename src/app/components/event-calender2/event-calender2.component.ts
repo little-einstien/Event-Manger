@@ -1,6 +1,6 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
-
+import * as M from 'materialize-css';
 import {
   startOfDay,
   endOfDay,
@@ -40,7 +40,10 @@ const colors: any = {
   templateUrl: './event-calender2.component.html',
   styleUrls: ['./event-calender2.component.css']
 })
-export class EventCalender2Component implements OnInit {
+export class EventCalender2Component implements OnInit ,AfterViewInit{
+  ngAfterViewInit(): void {
+    setTimeout(() => {M.Collapsible.init(document.querySelectorAll('.collapsible'), {})},500);
+  }
   showEditorPane = false;
   morning_slots = [];
   evening_slots = [];
@@ -126,15 +129,15 @@ export class EventCalender2Component implements OnInit {
   activeDayIsOpen: boolean = true;
 
   constructor(private modal: NgbModal, private dataHandlerServie: DataHandlerService) {
-    this.dataHandlerServie.getAppointments('131d3w2d').then((appointments: Array<any>) => {
+    this.dataHandlerServie.getAppointments('f7W18EB').then((appointments: Array<any>) => {
       this.events = [
       ];
 
       for (let i = 0; i < appointments.length; i++) {
         this.events.push({
-          start: new Date(appointments[i].st),
-          end: new Date(appointments[i].et),
-          title: appointments[i].fields.join(' | '),
+          start: new Date(appointments[i].date),
+          end: new Date(appointments[i].date),
+          title: `slot : ${appointments[i].slot} | ${appointments[i].user.name} | ${appointments[i].user.mobile} | ${appointments[i].user.email}`,
           color: colors.yellow,
           actions: this.actions,
           resizable: {
@@ -147,7 +150,7 @@ export class EventCalender2Component implements OnInit {
 
     });
   }
-
+  dateClicked = new Date();
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -155,6 +158,12 @@ export class EventCalender2Component implements OnInit {
         events.length === 0
       ) {
         this.activeDayIsOpen = false;
+        this.dateClicked = date;
+        this.dateClicked.setMinutes(0);
+        this.dateClicked.setHours(0);
+        this.dateClicked.setSeconds(0);
+        
+        console.log(this.dateClicked);
         this.showEditorPane = !this.showEditorPane
         //alert(this.viewDate);
       } else {
@@ -198,7 +207,7 @@ export class EventCalender2Component implements OnInit {
   selectedMorningSlots = [];
   selectedEveningSlots = [];
   saveSlots(){
-    this.dataHandlerServie.saveSlots({date : this.viewDate,m_slts:this.selectedMorningSlots,e_slts:this.selectedEveningSlots});
+    this.dataHandlerServie.saveSlots({date : this.dateClicked.getTime(),m_slts:this.selectedMorningSlots,e_slts:this.selectedEveningSlots});
     console.log(this.selectedMorningSlots);
     console.log(this.selectedEveningSlots);
   }

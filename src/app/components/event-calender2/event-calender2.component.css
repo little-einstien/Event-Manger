@@ -1,37 +1,37 @@
 h3 {
-    margin: 0 0 10px;
-  }
-  
-  pre {
-    background-color: #f5f5f5;
-    padding: 15px;
-  }
-  
+  margin: 0 0 10px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
 .round-btn{
-  margin-left: 10px;
-  background: #00AAFF;
-  border-radius: 50px;
+margin-left: 10px;
+background: #00AAFF;
+border-radius: 50px;
 }
 #cl-header{
-  padding: 15px;
+padding: 15px;
 }
 #cl-body{
-  padding: 15px;
+padding: 15px;
 }
 #cl-container{
 
 }
 #slot-list{
-  overflow-y: scroll;
-  max-height: 300px;
-  margin-top: 0px;
+overflow-y: scroll;
+max-height: 300px;
+margin-top: 0px;
 }
 #editor-pane{
-  padding:15px;  
+padding:15px;  
 }
 #editor-pane > span{
-  /* border-radius:50px; */
-  background: #00AAFF;
-  font-weight: bold;
-  padding: 5px;
+/* border-radius:50px; */
+background: #00AAFF;
+font-weight: bold;
+padding: 5px;
 }
