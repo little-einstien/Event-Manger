@@ -9,8 +9,8 @@ export const environment = {
   //  api_endpoint  : 'http://35.200.142.0:3000',
    bot_endpoint : 'http://35.200.142.0:3000',
   //nlu_endpoint : 'http://localhost:4203/api',
-  api_endpoint  : 'http://localhost:3000',
-  //bot_endpoint : 'http://localhost:3000',
+  //api_endpoint  : 'http://localhost:3000',
+  api_endpoint = 'http://35.200.142.0:3000'
   
   bot_script_pf : '<script type="text/javascript" id = "bot-script" data-project = ',
   bot_script_sf : '/plugin/js/chatBotWidget.js"></script>'
