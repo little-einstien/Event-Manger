@@ -22,6 +22,7 @@ export class EventService {
                             title: events[i].title,
                             start: events[i].st,
                             end: events[i].et,
+                          color : colors.blue,
                            actions: [
                             {
                               label: '<i class="fa fa-fw fa-pencil"></i>',
