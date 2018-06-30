@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 // import { Observable } from 'rxjs/Observable';
 
 import { Observable, of } from 'rxjs';
+import { colors } from '../demo-utils/colors';
+
 import { DataHandlerService } from './data-handler.service';
 @Injectable()
 export class EventService {
