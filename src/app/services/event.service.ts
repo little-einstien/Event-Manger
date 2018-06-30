@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 // import { Observable } from 'rxjs/Observable';
-
+import { CalendarEvent } from 'angular-calendar';
 import { Observable, of } from 'rxjs';
 import { colors } from '../components/demo-utils/colors';
 
