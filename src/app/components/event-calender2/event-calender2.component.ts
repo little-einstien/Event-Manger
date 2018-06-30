@@ -76,7 +76,7 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
 
   actions: CalendarEventAction[] = [
     {
-      label: '<i class="fa fa-fw fa-pencil">Hello</i>',
+      label: '<i class="fa fa-fw fa-pencil"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.handleEvent('Edited', event);
       }
