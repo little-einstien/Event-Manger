@@ -21,7 +21,16 @@ export class EventService {
                         this.data.push({
                             title: events[i].title,
                             start: events[i].st,
-                            end: events[i].et
+                            end: events[i].et,
+                           actions: [
+                            {
+                              label: '<i class="fa fa-fw fa-times"></i>',
+                              onClick: ({ event }: { event: CalendarEvent }): void => {
+                                this.events = this.events.filter(iEvent => iEvent !== event);
+                                console.log('Event deleted', event);
+                              }
+                            }
+                          ]
                         });
 
                         if (i == events.length - 1) {
