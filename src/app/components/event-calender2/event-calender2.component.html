@@ -119,8 +119,8 @@
                   </div>
                   <div class="col s12 m-l-0 m-b-8">
                     <label *ngFor="let cb of object.l " class=" p-r-10">
-                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="checkbox" disabled="disabled" />
-                      <span>{{cb.label}}</span>
+                      <input name="{{object.name}}" [checked]="cb.value" type="checkbox" disabled="disabled" />
+                      <span class="black-text">{{cb.label}}</span>
                     </label>
                   </div>
                 </div>
@@ -132,8 +132,8 @@
                   </div>
                   <div class="col s12 m-l-0 m-b-8">
                     <label *ngFor="let cb of object.l " class=" p-r-10">
-                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="radio" disabled="disabled" />
-                      <span>{{cb.label}}</span>
+                      <input name="{{object.name}}" [checked]="cb.label == object.value" type="radio" disabled="disabled" />
+                      <span class="black-text">{{cb.label}}</span>
                     </label>
                   </div>
                 </div>
