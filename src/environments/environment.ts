@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   token :'ab091c04f7254475b9fd000e7bf96a0d',
-   nlu_endpoint : 'http://35.200.198.3:4203/api',
   //  api_endpoint  : 'http://35.200.198.3:3000',
   //nlu_endpoint : 'http://localhost:4203/api',
   //api_endpoint  : 'http://localhost:3000',
