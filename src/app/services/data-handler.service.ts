@@ -88,6 +88,22 @@ export class DataHandlerService {
     });
   }
   
+  deleteAppointment(id) {
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/api/appointments/${id}`;
+      this.http.delete(url, httpOptions).subscribe((res: any) => {
+        if (res.status == DataHandlerService.SUCCESS) {
+          resolve(res.data);
+        }
+        // resolve(res);
+      });
+    });
+  }
 
 
 }
