@@ -186,8 +186,8 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   }
   public events_ = [];
   handleEvent(action: string, event: CalendarEvent): void {
-    if (action == "Delete") {
-      console.log(event);
+    if (action == "Deleted") {
+      alert(event.id);
     }
   }
 
