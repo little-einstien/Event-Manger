@@ -188,7 +188,7 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   handleEvent(action: string, event: CalendarEvent): void {
     if (action == "Deleted") {
       this.dataHandlerServie.deleteAppointment(event.id).then((result  : any) => {
-        if(result && result.status == "success"){
+        if(result){
           alert("Appointment Deleted");
         }else{
           alert("Something went wrong try again later");
