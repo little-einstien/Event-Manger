@@ -56,8 +56,8 @@
 	  <span class="col s12">Morning Slots</span>
 	  <p *ngFor="let slot of morning_slots index as i;" [attr.data-index]="i" class="col s3">
 		<label>
-		  <input  type="checkbox" [(ngModel)] = "morning_slots_input[i]" (ngModelChange)="addMorningSlots(slot,i)"/>
-		  <span>{{slot}}</span>
+		  <input  type="checkbox" [(ngModel)] = "slot['val']" (ngModelChange)="addMorningSlots(i)"/>
+		  <span>{{slot.l}}</span>
 		</label>
 	  </p>
 
@@ -68,8 +68,8 @@
 	  <span class="col s12">Evening Slots</span>
 	  <p *ngFor="let slot of evening_slots index as i;" [attr.data-index]="i" class="col s3">
 		<label>
-		  <input  type="checkbox" [(ngModel)] = "evening_slots_input[i]" (ngModelChange)="addEveningSlots(slot,i)"/>
-		  <span>{{slot}}</span>
+		  <input  type="checkbox" [(ngModel)] = "slot['val']" (ngModelChange)="addEveningSlots(i)"/>
+		  <span>{{slot.l}}</span>
 		</label>
 	  </p>
 
