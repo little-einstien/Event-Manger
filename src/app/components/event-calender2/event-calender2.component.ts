@@ -40,9 +40,9 @@ const colors: any = {
   templateUrl: './event-calender2.component.html',
   styleUrls: ['./event-calender2.component.css']
 })
-export class EventCalender2Component implements OnInit ,AfterViewInit{
+export class EventCalender2Component implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
-    setTimeout(() => {M.Collapsible.init(document.querySelectorAll('.collapsible'), {})},500);
+    setTimeout(() => { M.Collapsible.init(document.querySelectorAll('.collapsible'), {}) }, 500);
   }
   showEditorPane = false;
   morning_slots = [];
@@ -53,13 +53,13 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
     const day_start = moment().startOf('day').hours(9); // 7 am
     const day_end = moment().startOf('day').hours(13) // 10 pm
     while (day_start <= day_end) {
-      this.morning_slots.push({id : `s${moment(day_start)}` , l : moment(day_start).format('HH:mm')});
+      this.morning_slots.push({ id: `s${moment(day_start)}`, l: moment(day_start).format('HH:mm') });
       day_start.add(30, 'minutes');
     }
     const day_start1 = moment().startOf('day').hours(15); // 7 am
     const day_end1 = moment().startOf('day').hours(20) // 10 pm
     while (day_start1 <= day_end1) {
-      this.evening_slots.push({id : `s${moment(day_start1)}`, l :  moment(day_start1).format('HH:mm')});
+      this.evening_slots.push({ id: `s${moment(day_start1)}`, l: moment(day_start1).format('HH:mm') });
       day_start1.add(30, 'minutes');
     }
   }
@@ -162,7 +162,7 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
         this.dateClicked.setMinutes(0);
         this.dateClicked.setHours(0);
         this.dateClicked.setSeconds(0);
-        
+
         console.log(this.dateClicked);
         this.showEditorPane = !this.showEditorPane
         //alert(this.viewDate);
@@ -185,9 +185,9 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
   }
   public events_ = [];
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
-
+    if (action == "Delete") {
+      console.log(event);
+    }
   }
 
   addEvent(): void {
@@ -206,22 +206,22 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
   }
   selectedMorningSlots = [];
   selectedEveningSlots = [];
-  saveSlots(){
-    for(let i = 0 ; i < this.morning_slots.length ; i++ ){
-      if(this.morning_slots[i].val){
+  saveSlots() {
+    for (let i = 0; i < this.morning_slots.length; i++) {
+      if (this.morning_slots[i].val) {
         this.selectedMorningSlots.push(this.morning_slots[i]);
       }
     }
-    for(let i = 0 ; i < this.evening_slots.length ; i++ ){
-      if(this.evening_slots[i].val){
+    for (let i = 0; i < this.evening_slots.length; i++) {
+      if (this.evening_slots[i].val) {
         this.selectedEveningSlots.push(this.evening_slots[i]);
       }
     }
-    this.dataHandlerServie.saveSlots({date : this.dateClicked.getTime(),m_slts:this.selectedMorningSlots,e_slts:this.selectedEveningSlots});
+    this.dataHandlerServie.saveSlots({ date: this.dateClicked.getTime(), m_slts: this.selectedMorningSlots, e_slts: this.selectedEveningSlots });
     console.log(this.selectedMorningSlots);
     console.log(this.selectedEveningSlots);
   }
-  addMorningSlots(i){
+  addMorningSlots(i) {
     // if(this.morning_slots_input[i]){
     //   this.selectedMorningSlots.push(this.morning_slots_input[i]);
     //   //this.selectedMorningSlots.push(date);
@@ -231,7 +231,7 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
     //   });
     // }
   }
-  addEveningSlots(i){
+  addEveningSlots(i) {
     // if(this.evening_slots_input[i]){
     //   this.selectedEveningSlots.push(date);
     // }else{
