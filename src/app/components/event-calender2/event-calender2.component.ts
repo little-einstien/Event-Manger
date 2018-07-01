@@ -143,7 +143,7 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
           id : appointments[i].id,
           start: new Date(appointments[i].date),
           end: new Date(appointments[i].date),
-          title: `slot : ${appointments[i].slot.l} |  Id : ${appointments[i].id}| ${appointments[i].user.name} | ${appointments[i].user.mobile} | ${appointments[i].user.email}`,
+          title: `slot : ${appointments[i].slot.l} |  Id : ${appointments[i].id}| ${appointments[i].user.name} | ${appointments[i].user.mobile} | ${appointments[i].user.email}  `,
           color: colors.yellow,
           actions: this.actions,
           resizable: {
