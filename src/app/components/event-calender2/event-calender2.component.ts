@@ -137,7 +137,7 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
         this.events.push({
           start: new Date(appointments[i].date),
           end: new Date(appointments[i].date),
-          title: `slot : ${appointments[i].slot} | ${appointments[i].user.name} | ${appointments[i].user.mobile} | ${appointments[i].user.email}`,
+          title: `slot : ${appointments[i].slot.l} | ${appointments[i].user.name} | ${appointments[i].user.mobile} | ${appointments[i].user.email}`,
           color: colors.yellow,
           actions: this.actions,
           resizable: {
