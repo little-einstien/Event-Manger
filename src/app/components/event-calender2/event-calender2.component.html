@@ -1,21 +1,24 @@
 <div class="row">
-<div id="cl-container" [ngClass]="{'col s8' : showEditorPane}">
-  <div id="cl-header" class="row p-b-0 m-b-0">
-    <div class="col s3">
-        
-      <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+  <div id="cl-container" [ngClass]="{'col s8' : showEditorPane}">
+    <div id="cl-header" class="row p-b-0 m-b-0">
+      <div class="col s3">
+
+        <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
           <i class="material-icons">keyboard_arrow_left </i>
-      </a>
-      <a class="waves-effect waves-teal btn-flat" mwlCalendarToday [(viewDate)]="viewDate">
-        Today
-      </a>
-      <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="activeDayIsOpen = false">
+        </a>
+        <a class="waves-effect waves-teal btn-flat" mwlCalendarToday [(viewDate)]="viewDate">
+          Today
+        </a>
+        <a class="btn-floating btn-small waves-effect waves-light red" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+          (viewDateChange)="activeDayIsOpen = false">
           <i class=" material-icons">keyboard_arrow_right </i>
-      </a>
-    </div>
-    <div class="col s9 right-align">
-        <a class="waves-effect waves-light btn-small" >
-        Block the calender
+        </a>
+      </div>
+      <div class="col s9 right-align">
+        <a class="waves-effect waves-light btn modal-trigger" href="#queries-modal">Queries</a>
+        <a class="waves-effect waves-light btn-small">
+          Block the calender
         </a>
         <a class="waves-effect waves-light btn-small">
           View Schedule
@@ -29,55 +32,116 @@
         <a class="waves-effect waves-light btn-small" (click)="view = 'day'" [class.active]="view === 'day'">
           Day
         </a>
-	</div>
-    <div class="col s12 left-align">
-		<h5>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h5>
-	</div>
-    
+      </div>
+      <div class="col s12 left-align">
+        <h5>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h5>
+      </div>
+
+    </div>
+    <div class="row">
+      <div id="cl-body" class="p-t-0" [ngSwitch]="view">
+        <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-day-view>
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <div id="cl-body" class="p-t-0" [ngSwitch]="view">
-      <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)">
-      </mwl-calendar-day-view>
+  <div id="editor-pane" *ngIf="showEditorPane" class="col s4">
+    <span class=" center white-text">Mark availibility for {{dateClicked.getDate()}} {{ dateClicked | calendarDate:(view + 'ViewTitle'):'en' }}</span>
+    <ul class="collection" id="slot-list">
+      <li class="collection-item ">
+        <span class="col s12">Morning Slots</span>
+        <p *ngFor="let slot of morning_slots index as i;" [attr.data-index]="i" class="col s3">
+          <label>
+            <input type="checkbox" [(ngModel)]="slot['val']" (ngModelChange)="addMorningSlots(i)" />
+            <span>{{slot.l}}</span>
+          </label>
+        </p>
+
+      </li>
+    </ul>
+    <ul class="collection" id="slot-list">
+      <li class="collection-item ">
+        <span class="col s12">Evening Slots</span>
+        <p *ngFor="let slot of evening_slots index as i;" [attr.data-index]="i" class="col s3">
+          <label>
+            <input type="checkbox" [(ngModel)]="slot['val']" (ngModelChange)="addEveningSlots(i)" />
+            <span>{{slot.l}}</span>
+          </label>
+        </p>
+
+      </li>
+    </ul>
+    <div>
+      <a class="waves-effect waves-light round-btn btn" (click)="saveSlots()">Save Slots</a>
+      <!-- <a class="waves-effect waves-light btn">button</a> -->
     </div>
   </div>
 </div>
-<div id="editor-pane" *ngIf="showEditorPane" class="col s4">
-	<span class=" center white-text">Mark availibility for {{dateClicked.getDate()}} {{ dateClicked | calendarDate:(view + 'ViewTitle'):'en' }}</span>
-	<ul class="collection" id="slot-list">
-	<li class="collection-item ">
-	  <span class="col s12">Morning Slots</span>
-	  <p *ngFor="let slot of morning_slots index as i;" [attr.data-index]="i" class="col s3">
-		<label>
-		  <input  type="checkbox" [(ngModel)] = "slot['val']" (ngModelChange)="addMorningSlots(i)"/>
-		  <span>{{slot.l}}</span>
-		</label>
-	  </p>
 
-	</li>
-	</ul>
-	<ul class="collection" id="slot-list">
-	<li class="collection-item ">
-	  <span class="col s12">Evening Slots</span>
-	  <p *ngFor="let slot of evening_slots index as i;" [attr.data-index]="i" class="col s3">
-		<label>
-		  <input  type="checkbox" [(ngModel)] = "slot['val']" (ngModelChange)="addEveningSlots(i)"/>
-		  <span>{{slot.l}}</span>
-		</label>
-	  </p>
-
-	</li>
-	</ul>
-	<div >
-		<a class="waves-effect waves-light round-btn btn" (click)="saveSlots()">Save Slots</a>
-		<!-- <a class="waves-effect waves-light btn">button</a> -->
-	</div>
+<!-- Modal Structure -->
+<div id="queries-modal" class="modal">
+  <div class="modal-content">
+    <h4>Queries By users</h4>
+    <ul class="collapsible">
+      <li *ngFor="let data of queries">
+        <div class="collapsible-header">
+          <i class="material-icons">question_answer</i>Query by user</div>
+        <div class="collapsible-body">
+          <div class="row m-l-0 m-r-0">
+            <div class="col s12 m-b-8 black-text">
+              {{data.for}}
+            </div>
+            <form class="col s12">
+              <span *ngFor="let object of data.data" [ngSwitch]="object.t">
+                <div class="col s12 m-b-8" *ngSwitchCase="'i'">
+                  <div class="col s12  black-text p-l-0">
+                    {{object.ph}}
+                  </div>
+                  <p>{{object.value ? object.value : 'N/A'}}</p>
+                </div>
+                <div *ngSwitchCase="'cb'">
+                  <div *ngIf="object.label" class="col s12  black-text m-b-8">
+                    {{object.label}}
+                  </div>
+                  <div class="col s12 m-l-0 m-b-8">
+                    <label *ngFor="let cb of object.l " class=" p-r-10">
+                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="checkbox" />
+                      <span>{{cb.label}}</span>
+                    </label>
+                  </div>
+                </div>
+                <div *ngSwitchCase="'r'">
+                  <div *ngIf="object.label" class="col s12  black-text m-b-8">
+                    {{object.label}}
+                  </div>
+                  <div class="col s12 m-l-0 m-b-8">
+                    <label *ngFor="let cb of object.l " class=" p-r-10">
+                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="radio" />
+                      <span>{{cb.label}}</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="col s12 m-b-8" *ngSwitchCase="'ta'">
+                  <div class="col s12  black-text p-l-0">
+                    {{object.ph}}
+                  </div>
+                  <p>{{object.value ? object.value : 'N/A'}}</p>
+                </div>
+              </span>
+            </form>
+          </div>
+        </div>
+      </li>
+    </ul>
+</div>
+<div class="modal-footer">
+  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
 </div>
 </div>

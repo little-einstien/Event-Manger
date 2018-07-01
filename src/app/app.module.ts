@@ -15,10 +15,11 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { AuthGuard } from './gaurd/AuthGuard';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { FormsModule } from '@angular/forms';
+import { FormViewerComponent } from './components/form-viewer/form-viewer.component';
 @NgModule({
   declarations: [
     AppComponent,
-    EventCalenderComponent,routingComponents, LoginComponent,SideNavComponent
+    EventCalenderComponent,routingComponents, LoginComponent,SideNavComponent, FormViewerComponent
   ],
   imports: [
     BrowserModule,

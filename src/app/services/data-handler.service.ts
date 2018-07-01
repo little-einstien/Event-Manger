@@ -104,6 +104,21 @@ export class DataHandlerService {
       });
     });
   }
-
+  getForms() {
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/api/forms/c578e4a2d309f7198b9e98e9dc112b69`;
+      this.http.get(url, httpOptions).subscribe((res: any) => {
+        if (res.status == DataHandlerService.SUCCESS) {
+          resolve(res.data);
+        }
+        // resolve(res);
+      });
+    });
+  }
 
 }

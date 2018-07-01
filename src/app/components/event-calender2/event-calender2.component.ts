@@ -41,8 +41,13 @@ const colors: any = {
   styleUrls: ['./event-calender2.component.css']
 })
 export class EventCalender2Component implements OnInit, AfterViewInit {
+  public queries = [];
   ngAfterViewInit(): void {
-    setTimeout(() => { M.Collapsible.init(document.querySelectorAll('.collapsible'), {}) }, 500);
+    
+    setTimeout(() => {
+       M.Collapsible.init(document.querySelectorAll('.collapsible'), {}); 
+       M.Modal.init(document.querySelectorAll('.modal'), {});
+      }, 500);
   }
   showEditorPane = false;
   morning_slots = [];
@@ -150,6 +155,9 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
       }
 
     });
+    this.dataHandlerServie.getForms().then((data : [any]) => {
+      this.queries = data;
+    })
   }
   dateClicked = new Date();
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

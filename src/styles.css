@@ -19,3 +19,18 @@
 .cal-day-view .cal-time {
     font-weight:  normal !important;
 }
+.m-l-0 {
+    margin-left: 0px !important;
+  }
+  .m-r-0 {
+    margin-right: 0px !important;
+  }
+  .m-b-8 {
+    margin-bottom: 8px !important;
+  }
+  .p-l-0{
+    padding-left: 0px !important;
+  }
+  .p-r-10 {
+    padding-right: 10px;
+    }
