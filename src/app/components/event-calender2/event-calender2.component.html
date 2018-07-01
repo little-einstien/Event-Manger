@@ -16,7 +16,9 @@
         </a>
       </div>
       <div class="col s9 right-align">
-        <a class="waves-effect waves-light btn modal-trigger" href="#queries-modal">Queries</a>
+        <a class="waves-effect waves-light btn-small modal-trigger" href="#queries-modal">
+          Queries
+        </a>
         <a class="waves-effect waves-light btn-small">
           Block the calender
         </a>
@@ -95,44 +97,56 @@
           <i class="material-icons">question_answer</i>Query by user</div>
         <div class="collapsible-body">
           <div class="row m-l-0 m-r-0">
-            <div class="col s12 m-b-8 black-text">
-              {{data.for}}
+            <div class="col s12 m-b-8 black-text" style="font-size: 25px">
+              <b>{{data.for}}</b>
             </div>
             <form class="col s12">
               <span *ngFor="let object of data.data" [ngSwitch]="object.t">
                 <div class="col s12 m-b-8" *ngSwitchCase="'i'">
                   <div class="col s12  black-text p-l-0">
-                    {{object.ph}}
+                    <span>
+                      <b>Query: </b>
+                    </span>{{object.ph}}
                   </div>
-                  <p>{{object.value ? object.value : 'N/A'}}</p>
+                  <p>
+                    <span>
+                      <b>Ans: </b>
+                    </span>{{object.value ? object.value : 'N/A'}}</p>
                 </div>
                 <div *ngSwitchCase="'cb'">
                   <div *ngIf="object.label" class="col s12  black-text m-b-8">
-                    {{object.label}}
+                    <b>{{object.label}}</b>
                   </div>
                   <div class="col s12 m-l-0 m-b-8">
                     <label *ngFor="let cb of object.l " class=" p-r-10">
-                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="checkbox" />
+                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="checkbox" disabled="disabled" />
                       <span>{{cb.label}}</span>
                     </label>
                   </div>
                 </div>
                 <div *ngSwitchCase="'r'">
                   <div *ngIf="object.label" class="col s12  black-text m-b-8">
-                    {{object.label}}
+                    <span>
+                      <b>Query: </b>
+                    </span>{{object.label}}
                   </div>
                   <div class="col s12 m-l-0 m-b-8">
                     <label *ngFor="let cb of object.l " class=" p-r-10">
-                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="radio" />
+                      <input name="{{object.name}}" [(ngModel)]="cb.value" type="radio" disabled="disabled" />
                       <span>{{cb.label}}</span>
                     </label>
                   </div>
                 </div>
                 <div class="col s12 m-b-8" *ngSwitchCase="'ta'">
                   <div class="col s12  black-text p-l-0">
-                    {{object.ph}}
+                    <span>
+                      <b>Query: </b>
+                    </span>{{object.ph}}
                   </div>
-                  <p>{{object.value ? object.value : 'N/A'}}</p>
+                  <p>
+                    <span>
+                      <b>Ans: </b>
+                    </span>{{object.value ? object.value : 'N/A'}}</p>
                 </div>
               </span>
             </form>
@@ -140,8 +154,8 @@
         </div>
       </li>
     </ul>
-</div>
-<div class="modal-footer">
-  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-</div>
+  </div>
+  <div class="modal-footer">
+    <a  class="modal-close waves-effect waves-green btn-flat">Agree</a>
+  </div>
 </div>
