@@ -53,13 +53,13 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
     const day_start = moment().startOf('day').hours(9); // 7 am
     const day_end = moment().startOf('day').hours(13) // 10 pm
     while (day_start <= day_end) {
-      this.morning_slots.push(moment(day_start).format('HH:mm'));
+      this.morning_slots.push({id : `s${moment(day_start)}` , l : moment(day_start).format('HH:mm')});
       day_start.add(30, 'minutes');
     }
     const day_start1 = moment().startOf('day').hours(15); // 7 am
     const day_end1 = moment().startOf('day').hours(20) // 10 pm
     while (day_start1 <= day_end1) {
-      this.evening_slots.push(moment(day_start1).format('HH:mm'));
+      this.evening_slots.push({id : `s${moment(day_start1)}`, l :  moment(day_start1).format('HH:mm')});
       day_start1.add(30, 'minutes');
     }
   }
@@ -207,27 +207,37 @@ export class EventCalender2Component implements OnInit ,AfterViewInit{
   selectedMorningSlots = [];
   selectedEveningSlots = [];
   saveSlots(){
+    for(let i = 0 ; i < this.morning_slots.length ; i++ ){
+      if(this.morning_slots[i].val){
+        this.selectedMorningSlots.push(this.morning_slots[i]);
+      }
+    }
+    for(let i = 0 ; i < this.evening_slots.length ; i++ ){
+      if(this.evening_slots[i].val){
+        this.selectedEveningSlots.push(this.evening_slots[i]);
+      }
+    }
     this.dataHandlerServie.saveSlots({date : this.dateClicked.getTime(),m_slts:this.selectedMorningSlots,e_slts:this.selectedEveningSlots});
     console.log(this.selectedMorningSlots);
     console.log(this.selectedEveningSlots);
   }
-  addMorningSlots(date,i){
-    if(this.morning_slots_input[i]){
-      this.selectedMorningSlots.push(date);
-      //this.selectedMorningSlots.push(date);
-    }else{
-      _.remove(this.selectedMorningSlots, function(n) {
-        return this.selectedMorningSlots[n] === date;
-      });
-    }
+  addMorningSlots(i){
+    // if(this.morning_slots_input[i]){
+    //   this.selectedMorningSlots.push(this.morning_slots_input[i]);
+    //   //this.selectedMorningSlots.push(date);
+    // }else{
+    //   _.remove(this.selectedMorningSlots, function(n) {
+    //     return this.selectedMorningSlots[n] === date;
+    //   });
+    // }
   }
-  addEveningSlots(date,i){
-    if(this.evening_slots_input[i]){
-      this.selectedEveningSlots.push(date);
-    }else{
-      _.remove(this.selectedEveningSlots, function(n) {
-        return this.selectedEveningSlots[n] == date;
-      });
-    }
+  addEveningSlots(i){
+    // if(this.evening_slots_input[i]){
+    //   this.selectedEveningSlots.push(date);
+    // }else{
+    //   _.remove(this.selectedEveningSlots, function(n) {
+    //     return this.selectedEveningSlots[n] == date;
+    //   });
+    // }
   }
 }
