@@ -55,14 +55,14 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   morning_slots_input = [];
   evening_slots_input = [];
   ngOnInit(): void {
-    const day_start = moment().startOf('day').hours(9); // 7 am
-    const day_end = moment().startOf('day').hours(13) // 10 pm
+    const day_start = moment().startOf('day').hours(11); // 7 am
+    const day_end = moment().startOf('day').hours(13.30) // 10 pm
     while (day_start <= day_end) {
       this.morning_slots.push({ id: `s${moment(day_start)}`, l: moment(day_start).format('HH:mm') });
-      day_start.add(30, 'minutes');
+      day_start.add(10, 'minutes');
     }
-    const day_start1 = moment().startOf('day').hours(15); // 7 am
-    const day_end1 = moment().startOf('day').hours(20) // 10 pm
+    const day_start1 = moment().startOf('day').hours(19); // 7 am
+    const day_end1 = moment().startOf('day').hours(21) // 10 pm
     while (day_start1 <= day_end1) {
       this.evening_slots.push({ id: `s${moment(day_start1)}`, l: moment(day_start1).format('HH:mm') });
       day_start1.add(30, 'minutes');
