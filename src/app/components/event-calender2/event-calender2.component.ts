@@ -80,14 +80,14 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   };
 
   actions: CalendarEventAction[] = [
+    // {
+    //   label: '<i class="fa fa-fw fa-pencil"></i>',
+    //   onClick: ({ event }: { event: CalendarEvent }): void => {
+    //     this.handleEvent('Edited', event);
+    //   }
+    // },
     {
-      label: '<i class="fa fa-fw fa-pencil"></i>',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      }
-    },
-    {
-      label: '<i class="fa fa-fw fa-times"></i>',
+      label: '<i class="fa fa-fw fa-times tooltipped" title="Cancel Appointment"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
         this.handleEvent('Deleted', event);
@@ -139,18 +139,28 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
       ];
 
       for (let i = 0; i < appointments.length; i++) {
+        var sdate = new Date(appointments[i].date);
+        var edate = new Date(appointments[i].date);
+        var hm = appointments[i].slot.l.split(":");
+        sdate.setHours(parseInt(hm[0]));
+        sdate.setMinutes(parseInt(hm[1]));
+        edate.setHours(parseInt(hm[0]));
+        edate.setMinutes(parseInt(hm[1])+10);
         this.events.push({
           id : appointments[i].id,
-          start: new Date(appointments[i].date),
-          end: new Date(appointments[i].date),
-          title: `slot : ${appointments[i].slot.l} |  Id : ${appointments[i].id}| ${appointments[i].user.name} | ${appointments[i].user.mobile} | ${appointments[i].user.email}  `,
+          start: sdate,
+          end: edate,
+          title: `App Id : ${appointments[i].id} <br> Slot : ${appointments[i].slot.l}
+           <br>Name  : ${appointments[i].user.name} 
+           <br>Mobile :  ${appointments[i].user.mobile} 
+           ${appointments[i].user.email ?  '<br> Email :  ' + appointments[i].user.email : ''} ${appointments[i].remarks ? '<br> Remarks : ' + appointments[i].remarks : '' } `,
           color: colors.yellow,
           actions: this.actions,
           resizable: {
             beforeStart: true,
             afterEnd: true
           },
-          draggable: true
+          draggable: false
         });
       }
 
@@ -173,7 +183,7 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
         this.dateClicked.setSeconds(0);
 
         console.log(this.dateClicked);
-        this.showEditorPane = !this.showEditorPane
+        // this.showEditorPane = !this.showEditorPane
         //alert(this.viewDate);
       } else {
         this.viewDate = date;
@@ -194,6 +204,7 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   }
   public events_ = [];
   handleEvent(action: string, event: CalendarEvent): void {
+    debugger;
     if (action == "Deleted") {
       this.dataHandlerServie.deleteAppointment(event.id).then((result  : any) => {
         if(result){
