@@ -153,7 +153,6 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
           title: `App Id : ${appointments[i].id} | Slot : ${appointments[i].slot.l}
            | Name  : ${appointments[i].user.name} 
            | Mobile :  ${appointments[i].user.mobile} 
-           ${appointments[i].user.email ?  '| Email :  ' + appointments[i].user.email : ''}
            ${appointments[i].remarks ? '| Remarks : ' + appointments[i].remarks : '' } 
            ${appointments[i].pmode ? '| Payment Mode : ' + appointments[i].pmode : '' } `,
           color: colors.yellow,
