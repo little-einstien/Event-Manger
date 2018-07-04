@@ -150,12 +150,12 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
           id : appointments[i].id,
           start: sdate,
           end: edate,
-          title: `App Id : ${appointments[i].id} <br> Slot : ${appointments[i].slot.l}
-           <br>Name  : ${appointments[i].user.name} 
-           <br>Mobile :  ${appointments[i].user.mobile} 
-           ${appointments[i].user.email ?  '<br> Email :  ' + appointments[i].user.email : ''}
-           ${appointments[i].remarks ? '<br> Remarks : ' + appointments[i].remarks : '' } 
-           ${appointments[i].pmode ? '<br> Payment Mode : ' + appointments[i].pmode : '' } `,
+          title: `App Id : ${appointments[i].id} | Slot : ${appointments[i].slot.l}
+           | Name  : ${appointments[i].user.name} 
+           | Mobile :  ${appointments[i].user.mobile} 
+           ${appointments[i].user.email ?  '| Email :  ' + appointments[i].user.email : ''}
+           ${appointments[i].remarks ? '| Remarks : ' + appointments[i].remarks : '' } 
+           ${appointments[i].pmode ? '| Payment Mode : ' + appointments[i].pmode : '' } `,
           color: colors.yellow,
           actions: this.actions,
           resizable: {
