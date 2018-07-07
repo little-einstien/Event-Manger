@@ -4,6 +4,9 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
+const FAILURE = "failure";
+const SUCCESS = "success";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +15,7 @@ export class DataHandlerService {
   public static SUCCESS = "success";
   public apiRoot: string = environment.api_endpoint;
   public nlu_ep = environment.nlu_endpoint;
+  public project = 'f7W18EB';
   constructor(private http: HttpClient) { }
 
 
@@ -120,5 +124,116 @@ export class DataHandlerService {
       });
     });
   }
-
+  getSlots(username){
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/api/slots/u/${username}`;
+      this.http.get(url, httpOptions).subscribe((res:any) => {
+        if (res.status == SUCCESS) {
+          resolve(res.data);
+        }
+        // resolve(res);
+      });
+    });
+  }
+  getSlotsDatewise(username,date){
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/api/slots/u/${username}`;
+      this.http.post(url,{date:date}, httpOptions).subscribe((res:any) => {
+        if (res.status == SUCCESS) {
+          resolve(res.data);
+        }else{
+          resolve(null);
+        }
+        // resolve(res);
+      });
+    });
+  }
+  getUsers(pid){
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/api/users/p/${pid}`;
+      this.http.get(url, httpOptions).subscribe((res:any) => {
+        if (res.status == SUCCESS) {
+          resolve(res.data);
+        }
+        // resolve(res);
+      });
+    });
+  }
+  getTemprature(lat,lon){
+  
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/api/weather/${lat}/${lon}`
+      this.http.get(url, httpOptions).subscribe((res:any) => {
+        if (res.status == SUCCESS) {
+          resolve(res);
+        }
+        // resolve(res);
+      });
+    });
+  }
+  saveForm(details) {
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = this.apiRoot + '/api/forms/'+this.project ;
+      this.http.post(url, details, httpOptions).subscribe(res => {
+        resolve(res);
+      });
+    });
+   }
+   isUserRegistered(){
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = `${this.apiRoot}/chkusr` ;
+      this.http.get(url, httpOptions).subscribe((res:any) => {
+        if(res && res.data == '1'){
+          resolve(true);
+        }else{
+          resolve(false);
+        }
+      });
+    });
+   }
+   registerUser(registrationData) {
+    return new Promise((resolve, reject) => {
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json'
+        })
+      };
+      let url = this.apiRoot + '/register';
+  
+      this.http.post(url, registrationData, httpOptions).subscribe(res => {
+        resolve(res);
+      });
+    });
+   }
+  
 }

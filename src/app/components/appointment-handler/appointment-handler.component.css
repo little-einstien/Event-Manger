@@ -1,0 +1,66 @@
+.card-content ul.stepper {
+    margin: 1em -24px;
+    padding: 0 40px ;
+    min-height: 400px;
+  }
+  
+  .input-field input:focus, .input-field input[type=text]:valid, .input-field input[type=password]:valid, nav .input-field input[type=email]:valid, .input-field input[type=url]:valid,  .input-field input[type=date]:valid {
+    border: 0px;
+    border-bottom: 1px solid rgba(0,0,0,.3);
+  }
+  
+  input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom-color:  rgb(231, 87, 122);;
+    box-shadow: 0 1px 0 0 rgb(231, 87, 122);;
+  }
+  .field-header{
+    background: lightgrey;
+    padding: 10px;
+  }
+  
+  .step-content [type="radio"]:checked+span:after,
+  .step-content [type="radio"].with-gap:checked+span:after {
+      background-color: rgb(231, 87, 122);
+      border-color: rgb(231, 87, 122);
+  
+  
+  }
+  
+  
+  ul.stepper .step.active:before, ul.stepper .step.done:before {
+      background-color:rgb(231, 87, 122);
+    }
+  .booking-card-heading{
+      font-size: 17px;
+      font-weight: bold;
+      color: white !important;
+      background: grey;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-radius: 0px;
+  }
+  .card .card-content {
+    padding: 10px !important;
+  }
+  .appointment-card {
+    box-shadow: none !important;
+    -webkit-box-shadow : none !important;
+  }
+  .card-content h6{
+    font-size: 12px !important;
+  }
+  #tancframe{
+    display:none;
+  }
+  
+  @media(max-width:767px){
+    .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit, .ngx-datepicker-container .ngx-datepicker-calendar-container .main-calendar-container .main-calendar-days .day-unit.is-today {
+        height: 20px !important;
+    }
+  
+    .card-content ul.stepper {
+        padding: 0 20px;
+    }
+  }
+  
+  

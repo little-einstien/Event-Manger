@@ -19,7 +19,7 @@
         <a class="waves-effect waves-light btn-small modal-trigger" href="#queries-modal">
           Queries
         </a>
-        <a class="waves-effect waves-light btn-small">
+        <a class="waves-effect waves-light btn-small modal-trigger" href="#appointment-modal">
           Block the calender
         </a>
         <a class="waves-effect waves-light btn-small">
@@ -120,7 +120,7 @@
                   <div class="col s12 m-l-0 m-b-8">
                     <label *ngFor="let cb of object.l " class=" p-r-10">
                       <input name="{{object.name}}" [checked]="cb.value" type="checkbox" disabled="disabled" />
-                      <span class="black-text"  >{{cb.label}}</span>
+                      <span class="black-text">{{cb.label}}</span>
                     </label>
                   </div>
                 </div>
@@ -156,6 +156,15 @@
     </ul>
   </div>
   <div class="modal-footer">
-    <a  class="modal-close waves-effect waves-green btn-flat">Close</a>
+    <a class="modal-close waves-effect waves-green btn-flat">Close</a>
+  </div>
+</div>
+<div id="appointment-modal" class="modal">
+  <div class="modal-content">
+    <h4>Block the appointment for user</h4>
+    <app-appointment-handler></app-appointment-handler>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">Close</a>
   </div>
 </div>
