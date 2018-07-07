@@ -16,10 +16,11 @@ import { AuthGuard } from './gaurd/AuthGuard';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { FormsModule } from '@angular/forms';
 import { FormViewerComponent } from './components/form-viewer/form-viewer.component';
+import { AppointmentHandlerComponent } from './components/appointment-handler/appointment-handler.component';
 @NgModule({
   declarations: [
     AppComponent,
-    EventCalenderComponent,routingComponents, LoginComponent,SideNavComponent, FormViewerComponent
+    EventCalenderComponent,routingComponents, LoginComponent,SideNavComponent, FormViewerComponent, AppointmentHandlerComponent
   ],
   imports: [
     BrowserModule,
