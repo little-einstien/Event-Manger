@@ -34,3 +34,7 @@
   .p-r-10 {
     padding-right: 10px;
     }
+    
+#DataTables_Table_0_filter{
+  display: none !important;
+}

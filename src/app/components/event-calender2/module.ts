@@ -5,6 +5,7 @@ import { CalendarModule } from 'angular-calendar';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { DemoUtilsModule } from '../demo-utils/module';
 import { EventCalender2Component } from './event-calender2.component';
+import { DataTablesModule } from 'angular-datatables';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { EventCalender2Component } from './event-calender2.component';
     FormsModule,
     NgbModalModule.forRoot(),
     CalendarModule.forRoot(),
-    DemoUtilsModule
+    DemoUtilsModule,
+    DataTablesModule
   ],
   declarations: [EventCalender2Component],
   exports: [EventCalender2Component]

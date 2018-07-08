@@ -20,7 +20,7 @@
           Queries
         </a>
         <a class="waves-effect waves-light btn-small modal-trigger" href="#appointment-modal">
-          Block the calender
+          Appointment Report
         </a>
         <a class="waves-effect waves-light btn-small">
           View Schedule
@@ -161,8 +161,30 @@
 </div>
 <div id="appointment-modal" class="modal">
   <div class="modal-content">
-    <h4>Block the appointment for user</h4>
-    <app-appointment-handler></app-appointment-handler>
+    <h4>Appointment Report</h4>
+    <table datatable   [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"    class="row-border hover">
+        <thead>
+          <tr>
+            <th>App Id</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Payment mode</th>
+            <th>Date</th>
+            <th>Slot</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let data of app_data">
+            <td>{{data.id}}</td>
+            <td>{{data.user.name}}</td>
+            <td>{{data.user.mobile}}</td>
+            <td>{{data.pmode ? data.pmode : '-'}}</td>
+            <td>{{getDate(data.date)}}</td>
+            <td>{{data.slot.l}}</td>
+          </tr>
+        
+        </tbody>
+      </table>
   </div>
   <div class="modal-footer">
     <a class="modal-close waves-effect waves-green btn-flat">Close</a>

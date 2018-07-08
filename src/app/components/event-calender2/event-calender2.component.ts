@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
 import * as M from 'materialize-css';
 import {
@@ -40,13 +40,15 @@ const colors: any = {
   templateUrl: './event-calender2.component.html',
   styleUrls: ['./event-calender2.component.css']
 })
-export class EventCalender2Component implements OnInit, AfterViewInit {
+export class EventCalender2Component implements OnInit, AfterViewInit,OnDestroy {
   public queries = [];
+  public app_data =[];
   ngAfterViewInit(): void {
     
     setTimeout(() => {
        M.Collapsible.init(document.querySelectorAll('.collapsible'), {}); 
        M.Modal.init(document.querySelectorAll('.modal'), {});
+       M.FormSelect.init(document.querySelectorAll('select'), {});
       }, 500);
   }
   showEditorPane = false;
@@ -54,7 +56,32 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   evening_slots = [];
   morning_slots_input = [];
   evening_slots_input = [];
+  dtTrigger: Subject<any> = new Subject();
+  public dtOptions: any  = {}
   ngOnInit(): void {
+    this.dtOptions = {
+      pagingType : "full_numbers",
+      pageLength: 10,
+      dom: 'Bfrtip',
+      buttons: [
+        'colvis',
+        'copy',
+        'print',
+        'excel',
+        {
+          text: 'Some button',
+          key: '1',
+          action: function (e, dt, node, config) {
+            alert('Button activated');
+          }
+        }
+      ],
+      columnDefs: [
+        { targets: [4], type:'date'},
+      
+    ] ,     
+    "order": [[ 4, "desc" ]]
+    };
     const day_start = moment().startOf('day').hours(11); // 7 am
     const day_end = moment().startOf('day').hours(14) // 10 pm
     while (day_start <= day_end) {
@@ -132,9 +159,12 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
   // ];
 
   activeDayIsOpen: boolean = true;
-
+  
   constructor(private modal: NgbModal, private dataHandlerServie: DataHandlerService) {
+    
     this.dataHandlerServie.getAppointments('f7W18EB').then((appointments: Array<any>) => {
+      this.app_data = appointments;
+      this.dtTrigger.next();
       this.events = [
       ];
 
@@ -266,5 +296,12 @@ export class EventCalender2Component implements OnInit, AfterViewInit {
     //     return this.selectedEveningSlots[n] == date;
     //   });
     // }
+  }
+  getDate(date){
+    return new Date(date).toDateString();
+  }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 }

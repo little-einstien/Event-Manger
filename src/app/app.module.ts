@@ -17,6 +17,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { FormsModule } from '@angular/forms';
 import { FormViewerComponent } from './components/form-viewer/form-viewer.component';
 import { AppointmentHandlerComponent } from './components/appointment-handler/appointment-handler.component';
+import { DataTablesModule } from 'angular-datatables';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,8 @@ import { AppointmentHandlerComponent } from './components/appointment-handler/ap
     BrowserAnimationsModule,
     FullCalendarModule,
     AppRoutingModule,
-    HttpClientModule,DemoModule,FormsModule
+    HttpClientModule,DemoModule,FormsModule,
+    DataTablesModule
 
   ],
   providers: [EventService,DataHandlerService,AuthGuard,JwtHelperService

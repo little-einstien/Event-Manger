@@ -35,3 +35,10 @@ background: #00AAFF;
 font-weight: bold;
 padding: 5px;
 }
+
+#appointment-modal { width: 90% !important ; max-height: 95% !important ; top: 3% !important }
+
+
+.dataTables_length label,.dataTables_filter label{
+  font-size:16px !important;
+}
